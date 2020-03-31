@@ -6,6 +6,10 @@ def is_sorted(items):
     TODO: Running time: ??? Why and under what conditions?
     TODO: Memory usage: ??? Why and under what conditions?"""
     # TODO: Check that all adjacent items are in order, return early if so
+    for i in range(len(items)-1):
+        if items[i] > items[i+1]:
+            return False
+    return True
 
 
 def bubble_sort(items):
@@ -14,7 +18,18 @@ def bubble_sort(items):
     TODO: Running time: ??? Why and under what conditions?
     TODO: Memory usage: ??? Why and under what conditions?"""
     # TODO: Repeat until all items are in sorted order
-    # TODO: Swap adjacent items that are out of order
+    swapped = True
+    last_unsorted = len(items)-1
+    
+    while swapped == True:
+        swapped = False
+        for i in range(last_unsorted):
+            # TODO: Swap adjacent items that are out of order
+            if (items[i] > items[i+1]):
+                items[i], items[i+1] = items[i+1], items[i]
+                swapped = True
+        last_unsorted -= 1
+    return items
 
 
 def selection_sort(items):
