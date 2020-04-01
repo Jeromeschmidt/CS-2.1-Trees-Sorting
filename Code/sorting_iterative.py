@@ -48,17 +48,6 @@ def selection_sort(items):
         items[i], items[minimum_index] = items[minimum_index], items[i]
     return items
 
-"""
-while the list is not sorted
-    iterate over list and find minimum not yet sorted
-    swapped the minimum with first unsorted element
-"""
-
-
-
-
-
-
 
 def insertion_sort(items):
     """Sort given items by taking first unsorted item, inserting it in sorted
@@ -68,3 +57,11 @@ def insertion_sort(items):
     # TODO: Repeat until all items are in sorted order
     # TODO: Take first unsorted item
     # TODO: Insert it in sorted order in front of items
+    for i in range(1, len(items)):
+        j = i-1
+        temp = items[i]
+        while ((j >= 0) and (items[j] > temp)):
+            items[j+1] = items[j]
+            j -= 1
+        items[j+1] = temp
+    return items
