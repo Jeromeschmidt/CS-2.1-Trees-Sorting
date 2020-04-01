@@ -15,12 +15,12 @@ def is_sorted(items):
 def bubble_sort(items):
     """Sort given items by swapping adjacent items that are out of order, and
     repeating until all items are in sorted order.
-    TODO: Running time: ??? Why and under what conditions?
-    TODO: Memory usage: ??? Why and under what conditions?"""
+    TODO: Running time: O(n^2) Why and under what conditions? Worst case, visits each element n times for each element
+    TODO: Memory usage: O(n) Why and under what conditions? No new memory created, elements are swapped"""
     # TODO: Repeat until all items are in sorted order
     swapped = True
     last_unsorted = len(items)-1
-    
+
     while swapped == True:
         swapped = False
         for i in range(last_unsorted):
@@ -38,8 +38,26 @@ def selection_sort(items):
     TODO: Running time: ??? Why and under what conditions?
     TODO: Memory usage: ??? Why and under what conditions?"""
     # TODO: Repeat until all items are in sorted order
-    # TODO: Find minimum item in unsorted items
+    for i in range(len(items)):
+        minimum_index = i
+        # TODO: Find minimum item in unsorted items
+        for j in range(i+1, len(items), 1):
+            if items[j] < items[minimum_index]:
+                minimum_index = j
     # TODO: Swap it with first unsorted item
+        items[i], items[minimum_index] = items[minimum_index], items[i]
+    return items
+
+"""
+while the list is not sorted
+    iterate over list and find minimum not yet sorted
+    swapped the minimum with first unsorted element
+"""
+
+
+
+
+
 
 
 def insertion_sort(items):
