@@ -57,6 +57,8 @@ def insertion_sort(items):
     # TODO: Repeat until all items are in sorted order
     # TODO: Take first unsorted item
     # TODO: Insert it in sorted order in front of items
+    if len(items) == 0 or len(items) == 1:
+        return items
     for unsorted_index in range(1, len(items)):
         sorted_index = unsorted_index-1
         temp = items[unsorted_index]
