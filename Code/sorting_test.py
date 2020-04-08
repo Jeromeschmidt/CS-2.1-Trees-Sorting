@@ -164,10 +164,10 @@ class StringSortTest(unittest.TestCase):
         sort(items1)
         assert items1 == ['A']  # List should not be changed
         items2 = ['B', 'A']
-        sort(items2)
+        items2 = sort(items2)
         assert items2 == ['A', 'B']  # List should be in sorted order
         items3 = ['B', 'C', 'A']
-        sort(items3)
+        items3 = sort(items3)
         assert items3 == ['A', 'B', 'C']
         # TODO: Write more test cases with assert equal list statements
         # You'll need a lot more than this to test sorting algorithm robustness

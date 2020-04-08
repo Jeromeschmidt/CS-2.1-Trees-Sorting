@@ -9,9 +9,9 @@ def merge(items1, items2):
     # TODO: Repeat until one list is empty
     # TODO: Find minimum item in both lists and append it to new list
     # TODO: Append remaining items in non-empty list to new list
-    if len(items1) == 0 or len(items1) == 1:
+    if len(items1) == 0:
         return items2
-    if len(items2) == 0 or len(items2) == 1:
+    if len(items2) == 0:
         return items1
     i = 0
     j = 0
@@ -64,7 +64,8 @@ def merge_sort(items):
     if len(items) == 1 or len(items) == 0:
         return items
     # TODO: Split items list into approximately equal halves
-    return split_sort_merge(items)
+    # print(items)
+    return merge(merge_sort(items[:int(len(items)/2)]), merge_sort(items[int(len(items)/2):]))
     # TODO: Sort each half by recursively calling merge sort
     # TODO: Merge sorted halves into one list in sorted order
 
@@ -96,4 +97,4 @@ def quick_sort(items, low=None, high=None):
 
 # merge_sort([1,3,5,2,4,6,3])
 # print(merge_sort([1,3,5,2,4,6,3]))
-print(merge_sort([3, 3]))
+print(merge_sort([1,3,5,2,4,6,3]))
