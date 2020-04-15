@@ -83,12 +83,12 @@ def partition(items, low, high):
     # TODO: Move items greater than pivot into back of range [p+1...high]
     # TODO: Move pivot item into final position [p] and return index p
     pivot_index = low
-    for i in range(low, high+1):
+    for i in range(low, high):
         if items[i] <= items[pivot_index]:
-            items[low], items[i] = items[i], items[low]
+            items[pivot_index], items[i] = items[i], items[pivot_index]
             i += 1
+    # print(items[pivot_index])
     return pivot_index
-
 
 
 def quick_sort(items, low=None, high=None):
@@ -102,7 +102,7 @@ def quick_sort(items, low=None, high=None):
     # TODO: Partition items in-place around a pivot and get index of pivot
     # TODO: Sort each sublist range by recursively calling quick sort
     if high is None:
-        high = len(items)-1
+        high = len(items)
     if low is None:
         low = 0
 
@@ -112,9 +112,14 @@ def quick_sort(items, low=None, high=None):
 
         quick_sort(items, low, pt-1)
         quick_sort(items, pt+1, high)
+
     return items
 
 # merge_sort([1,3,5,2,4,6,3])
 # print(merge_sort([1,3,5,2,4,6,3]))
-print(quick_sort([1,3,5,2,4,6,3]))
+# print(quick_sort([1,3,5,2,4,6,3]))
 # print(quick_sort([5,7,1,3,4,6,3]))
+# print(quick_sort([9,8,7,6,5,4,3,2,1]))
+# print(quick_sort([9,8]))
+# quick_sort([9,8,7,6,5,4,3,2,1])
+print(quick_sort([1,2,3,4,5,6,7,8,9]))
