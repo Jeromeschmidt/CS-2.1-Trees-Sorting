@@ -97,14 +97,10 @@ class PrefixTree:
         for child in node.children:
             node = node.get_child(child)
             curr_string += node.character
-            # print("!!")
-            # print(curr_string)
             if node.terminal == True:
                 strings.append(curr_string)
             self._get_string(node, curr_string, strings)
             node = first_node
-        # print("!!")
-        # print(strings)
         return strings
 
     def complete(self, prefix):
