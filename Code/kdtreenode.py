@@ -7,9 +7,6 @@ class KDTreeNode:
     associates the next character in a string to the next node along its path from
     the tree's root node to a terminal node that marks the end of the string."""
 
-    # Choose an appropriate type of data structure to store children nodes in
-    # Hint: Choosing list or dict affects implementation of all child methods
-    CHILDREN_TYPE = dict # or list
 
     def __init__(self, data):
         """Initialize this prefix tree node with the given character value, an
@@ -67,9 +64,9 @@ class KDTreeNode:
             return height_2
 
     def __repr__(self):
-        """Return a code representation of this prefix tree node."""
-        return f'KDTreeNode({self.character!r})'
+        """Return a code representation of this KD tree node."""
+        return f'KDTreeNode({self.data!r})'
 
     def __str__(self):
-        """Return a string view of this prefix tree node."""
-        return f'({self.character})'
+        """Return a string view of this KD tree node."""
+        return f'({self.data})'

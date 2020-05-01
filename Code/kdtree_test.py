@@ -76,29 +76,32 @@ class KDTreeTest(unittest.TestCase):
         assert tree.size == 0
         assert tree.is_empty() is True
 
-    def test_init_with_list(self):
+    def test_init_with_list_dim_2(self):
         tree = KDTree(2, [(1,1), (3,3), (2,2)])
         assert tree.root.data == (1,1)
-        # assert tree.root.left.data == None
-        # assert tree.root.right.data == (2,2)
-        # assert tree.size == 3
+        assert tree.root.left == None
+        assert tree.root.right.data == (3,3)
+        assert tree.root.right.left.data == (2,2)
+        assert tree.size == 3
         assert tree.is_empty() is False
 
-    # def test_init_with_list_of_strings(self):
-    #     tree = KDTree(['B', 'A', 'C'])
-    #     assert tree.root.data == 'B'
-    #     assert tree.root.left.data == 'A'
-    #     assert tree.root.right.data == 'C'
-    #     assert tree.size == 3
-    #     assert tree.is_empty() is False
-    #
-    # def test_init_with_list_of_tuples(self):
-    #     tree = KDTree([(2, 'B'), (1, 'A'), (3, 'C')])
-    #     assert tree.root.data == (2, 'B')
-    #     assert tree.root.left.data == (1, 'A')
-    #     assert tree.root.right.data == (3, 'C')
-    #     assert tree.size == 3
-    #     assert tree.is_empty() is False
+    def test_init_with_list_dim_3(self):
+        tree = KDTree(3, [(1,2,3), (0,1,4), (2,4,3)])
+        assert tree.root.data == (1,2,3)
+        assert tree.root.left.data == (0,1,4)
+        assert tree.root.right.data == (2,4,3)
+        assert tree.size == 3
+        assert tree.is_empty() is False
+
+    def test_init_with_larger_list_dim_5(self):
+        tree = KDTree(5, [(1,2,3,4,5), (0,1,4,1,2), (2,4,3,6,7), (9,8,10,7,3), (-1,0,0,14,15)])
+        assert tree.root.data == (1,2,3,4,5)
+        assert tree.root.left.data == (0,1,4,1,2)
+        assert tree.root.right.data == (2,4,3,6,7)
+        assert tree.root.right.right.data == (9,8,10,7,3)
+        assert tree.root.left.left.data == (-1,0,0,14,15)
+        assert tree.size == 5
+        assert tree.is_empty() is False
 
     def test_size(self):
         tree = KDTree(1)
