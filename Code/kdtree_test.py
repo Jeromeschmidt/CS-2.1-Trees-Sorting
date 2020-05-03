@@ -71,7 +71,7 @@ class KDTreeNodeTest(unittest.TestCase):
 class KDTreeTest(unittest.TestCase):
 
     def test_init(self):
-        tree = KDTree()
+        tree = KDTree(1)
         assert tree.root is None
         assert tree.size == 0
         assert tree.is_empty() is True

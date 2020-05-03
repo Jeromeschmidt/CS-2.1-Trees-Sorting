@@ -7,7 +7,7 @@ class KDTree(object):
     """
     """
 
-    def __init__(self, dimensions=None, points=None):
+    def __init__(self, dimensions, points=None):
         """Initialize this KD tree and insert the given points, if any."""
         self.root = None
         # Count the number of strings inserted into the tree
@@ -33,7 +33,10 @@ class KDTree(object):
     def contains(self, point):
         """Return True if this KD tree contains the given point."""
         # TODO
-        pass
+        # Find a node with the given item, if any
+        node = self._find_node(point, self.root)
+        # Return True if a node was found, or False
+        return node is not None
 
     def find_parent(self, point, node, parent=None):
                 # Check if starting node exists
@@ -85,27 +88,47 @@ class KDTree(object):
             # TODO: Increase the tree size
             self.size += 1
 
-    def _find_node(self, point):
+    def _find_node(self, point, node):
         """
         """
-        pass
+        # Check if starting node exists
+
+        if node is None:
+            # Not found (base case)
+            return None
+        # TODO: Check if the given item matches the node's data
+        elif node.data == point:
+            # Return the found node
+            return node
+        # TODO: Check if the given item is less than the node's data
+        elif point < node.data:
+            # TODO: Recursively descend to the node's left child, if it exists
+            return self._find_node(point, node.left)
+        # TODO: Check if the given item is greater than the node's data
+        elif point > node.data:
+            # TODO: Recursively descend to the node's right child, if it exists
+            return self._find_node(point, node.right)
 
     def delete(self, point):
         """Deletes given point from tree"""
         pass
 
 
-    def _traverse(self, node, prefix, visit):
+    def _traverse(self, node, visit):
         """Traverse this prefix tree with recursive depth-first traversal.
         Start at the given node with the given prefix representing its path in
         this prefix tree and visit each node with the given visit function."""
         # TODO
-        if node.terminal == True:
-            visit(prefix)
-
-        for child in node.children:
-            temp_node = node.get_child(child)
-            self._traverse(temp_node, prefix + temp_node.character, visit)
+        if node is None:
+            return
+        # TODO: Traverse left subtree, if it exists
+        if node.left != None:
+            self._traverse(node.left, visit)
+        # TODO: Visit this node's data with given function
+        visit(node.data)
+        # TODO: Traverse right subtree, if it exists
+        if node.right != None:
+            self._traverse(node.right, visit)
 
     def nearest_neighbors(self, point):
         pass
@@ -160,6 +183,12 @@ def main():
     assert tree.root.left.left.data == (-1,0,0,14,15)
     assert tree.size == 5
     assert tree.is_empty() is False
+    temp = list()
+    print(tree._traverse(tree.root, temp.append))
+    print(temp)
+    print(f'\ntree: {tree}')
+    print(tree.contains((1,2,3,4,5)))
+    print(tree.contains((1,2,11,4,5)))
 
     # tree = KDTree(3, [(1,2,3), (0,1,4), (2,4,3)])
     # assert tree.root.data == (1,2,3)
@@ -167,6 +196,7 @@ def main():
     # assert tree.root.right.data == (2,4,3)
     # assert tree.size == 3
     # assert tree.is_empty() is False
+    # print(f'\ntree: {tree}')
 
     # tree = KDTree(2, [(1,1), (3,3), (2,2)])
     # print(f'\ntree: {tree}')
