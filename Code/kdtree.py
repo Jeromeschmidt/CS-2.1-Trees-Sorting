@@ -90,9 +90,9 @@ class KDTree(object):
 
     def _find_node(self, point, node):
         """
+        Check to see if a given point is contained in the tree, returns None if not found
         """
         # Check if starting node exists
-
         if node is None:
             # Not found (base case)
             return None

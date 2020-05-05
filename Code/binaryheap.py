@@ -22,7 +22,9 @@ class BinaryMinHeap(object):
     def is_empty(self):
         """Return True if this heap is empty, or False otherwise."""
         # TODO: Check if empty based on how many items are in the list
-        # ...
+        if self.items == []:
+            return True
+        return False
 
     def size(self):
         """Return the number of items in this heap."""
@@ -86,6 +88,7 @@ class BinaryMinHeap(object):
         Worst case running time: O(log n) if items on path up to root node are
         out of order. Maximum path length in complete binary tree is log n."""
         if index == 0:
+            print("!!")
             return  # This index is the root node (does not have a parent)
         if not (0 <= index <= self._last_index()):
             raise IndexError('Invalid index: {}'.format(index))
@@ -95,9 +98,10 @@ class BinaryMinHeap(object):
         parent_index = self._parent_index(index)
         parent_item = self.items[parent_index]
         # TODO: Swap this item with parent item if values are out of order
-        # ...
+        if item < parent_item:
+            self.items[index], self.items[parent_index] = self.items[parent_index], self.items[index]
         # TODO: Recursively bubble up again if necessary
-        # ...
+            self._bubble_up(parent_index)
 
     def _bubble_down(self, index):
         """Ensure the heap ordering property is true below the given index,
@@ -116,12 +120,16 @@ class BinaryMinHeap(object):
         item = self.items[index]
         # TODO: Determine which child item to compare this node's item to
         child_index = 0
-        # ...
+        if right_index >= self.size() or self.items[left_index] < self.items[right_index]:
+            child_index = left_index
+        else:
+            child_index = right_index
         # TODO: Swap this item with a child item if values are out of order
         child_item = self.items[child_index]
-        # ...
+        if item > child_item:
+            self.items[index], self.items[child_index] = self.items[child_index], self.items[index]
         # TODO: Recursively bubble down again if necessary
-        # ...
+            self._bubble_down(child_index)
 
     def _last_index(self):
         """Return the last valid index in the underlying array of items."""
@@ -144,27 +152,41 @@ class BinaryMinHeap(object):
 
 def test_binary_min_heap():
     # Create a binary min heap of 7 items
-    items = [9, 25, 86, 3, 29, 5, 55]
+    # items = [9, 25, 86, 3, 29, 5, 55]
+    # heap = BinaryMinHeap()
+    # print('heap: {}'.format(heap))
+
     heap = BinaryMinHeap()
-    print('heap: {}'.format(heap))
-
-    print('\nInserting items:')
-    for index, item in enumerate(items):
+    items = [9, 25, 86, 3, 29, 5, 55]
+    for item in items:
         heap.insert(item)
-        print('insert({})'.format(item))
-        print('heap: {}'.format(heap))
-        print('size: {}'.format(heap.size()))
-        heap_min = heap.get_min()
-        real_min = min(items[: index + 1])
-        correct = heap_min == real_min
-        print('get_min: {}, correct: {}'.format(heap_min, correct))
-
-    print('\nDeleting items:')
+    assert heap.size() == len(items)
     for item in sorted(items):
-        heap_min = heap.delete_min()
-        print('delete_min: {}'.format(heap_min))
         print('heap: {}'.format(heap))
-        print('size: {}'.format(heap.size()))
+        print("!")
+        print(heap.delete_min())
+        print(item)
+
+        # assert heap.delete_min() == item
+    # assert heap.size() == 0
+
+    # print('\nInserting items:')
+    # for index, item in enumerate(items):
+    #     heap.insert(item)
+    #     print('insert({})'.format(item))
+    #     print('heap: {}'.format(heap))
+    #     print('size: {}'.format(heap.size()))
+    #     heap_min = heap.get_min()
+    #     real_min = min(items[: index + 1])
+    #     correct = heap_min == real_min
+    #     print('get_min: {}, correct: {}'.format(heap_min, correct))
+    #
+    # print('\nDeleting items:')
+    # for item in sorted(items):
+    #     heap_min = heap.delete_min()
+    #     print('delete_min: {}'.format(heap_min))
+    #     print('heap: {}'.format(heap))
+    #     print('size: {}'.format(heap.size()))
 
 
 if __name__ == '__main__':
