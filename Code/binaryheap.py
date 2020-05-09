@@ -150,36 +150,33 @@ class BinaryMinHeap(object):
         return (index << 1) + 2  # Shift left to multiply by 2
 
 
+def max_heapify(items):
+    for i in range(len(items)):
+        
+    pass
+
+def heap_sort(items):
+    heap = max_heapify(items)
+    heap
+
 def test_binary_min_heap():
     # Create a binary min heap of 7 items
-    # items = [9, 25, 86, 3, 29, 5, 55]
-    # heap = BinaryMinHeap()
-    # print('heap: {}'.format(heap))
-
-    heap = BinaryMinHeap()
     items = [9, 25, 86, 3, 29, 5, 55]
-    for item in items:
+    heap = BinaryMinHeap()
+    print('heap: {}'.format(heap))
+
+    print('\nInserting items:')
+    for index, item in enumerate(items):
         heap.insert(item)
-    assert heap.size() == len(items)
-    for item in sorted(items):
+        print('insert({})'.format(item))
         print('heap: {}'.format(heap))
-        print("!")
-        print(heap.delete_min())
-        print(item)
+        print('size: {}'.format(heap.size()))
+        heap_min = heap.get_min()
+        real_min = min(items[: index + 1])
+        correct = heap_min == real_min
+        print('get_min: {}, correct: {}'.format(heap_min, correct))
 
-        # assert heap.delete_min() == item
-    # assert heap.size() == 0
-
-    # print('\nInserting items:')
-    # for index, item in enumerate(items):
-    #     heap.insert(item)
-    #     print('insert({})'.format(item))
-    #     print('heap: {}'.format(heap))
-    #     print('size: {}'.format(heap.size()))
-    #     heap_min = heap.get_min()
-    #     real_min = min(items[: index + 1])
-    #     correct = heap_min == real_min
-    #     print('get_min: {}, correct: {}'.format(heap_min, correct))
+    print(heap_sort(heap))
     #
     # print('\nDeleting items:')
     # for item in sorted(items):

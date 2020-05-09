@@ -1,5 +1,7 @@
 #!python3
+import math
 
+from sorting_iterative import insertion_sort
 from kdtreenode import KDTreeNode
 
 
@@ -130,8 +132,29 @@ class KDTree(object):
         if node.right != None:
             self._traverse(node.right, visit)
 
-    def nearest_neighbors(self, point):
-        pass
+    def distance(self, p1, p2):
+        return math.sqrt(sum([((p2[i]-p1[i])**2) for i in range(len(p1))]))
+
+
+    def nearest_neighbors(self, point, node=None, closest_point=None):
+        if node == None:
+            node = self.root
+
+        if closest_point == None:
+            closest_point = [1000000000000]*len(point)
+
+        dist = self.distance(point, node.data)
+        if dist < self.distance(point, closest_point):
+            closest_point = node.data
+
+        # add pruning
+        if node.left is not None:
+            self.nearest_neighbors(point, node.left, closest_point)
+        if node.right is not None:
+            self.nearest_neighbors(point, node.right, closest_point)
+
+        return closest_point
+
 
 # def create_prefix_tree(strings):
 #     print(f'strings: {strings}')
@@ -175,20 +198,25 @@ class KDTree(object):
 
 
 def main():
+
     tree = KDTree(5, [(1,2,3,4,5), (0,1,4,1,2), (2,4,3,6,7), (9,8,10,7,3), (-1,0,0,14,15)])
-    assert tree.root.data == (1,2,3,4,5)
-    assert tree.root.left.data == (0,1,4,1,2)
-    assert tree.root.right.data == (2,4,3,6,7)
-    assert tree.root.right.right.data == (9,8,10,7,3)
-    assert tree.root.left.left.data == (-1,0,0,14,15)
-    assert tree.size == 5
-    assert tree.is_empty() is False
-    temp = list()
-    print(tree._traverse(tree.root, temp.append))
-    print(temp)
-    print(f'\ntree: {tree}')
-    print(tree.contains((1,2,3,4,5)))
-    print(tree.contains((1,2,11,4,5)))
+    print(tree.distance((1,1),(1,1)))
+    print(tree.distance((1,1),(2,2)))
+    print(tree.nearest_neighbors((1,2,3,4,5)))
+    print(tree.nearest_neighbors((0,1,4,1,2)))
+#     assert tree.root.data == (1,2,3,4,5)
+#     assert tree.root.left.data == (0,1,4,1,2)
+#     assert tree.root.right.data == (2,4,3,6,7)
+#     assert tree.root.right.right.data == (9,8,10,7,3)
+#     assert tree.root.left.left.data == (-1,0,0,14,15)
+#     assert tree.size == 5
+#     assert tree.is_empty() is False
+#     temp = list()
+#     print(tree._traverse(tree.root, temp.append))
+#     print(temp)
+#     print(f'\ntree: {tree}')
+#     print(tree.contains((1,2,3,4,5)))
+#     print(tree.contains((1,2,11,4,5)))
 
     # tree = KDTree(3, [(1,2,3), (0,1,4), (2,4,3)])
     # assert tree.root.data == (1,2,3)
