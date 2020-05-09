@@ -136,24 +136,27 @@ class KDTree(object):
         return math.sqrt(sum([((p2[i]-p1[i])**2) for i in range(len(p1))]))
 
 
-    def nearest_neighbors(self, point, node=None, closest_point=None):
+    def nearest_neighbors(self, point, node=None, closest_points=None):
+        """
+        returns list of all points contained in tree sorted by increasing distance to the point given
+        """
         if node is None:
             node = self.root
 
-        if closest_point is None:
-            closest_point = [1000000000000]*len(point)
+        if closest_points is None:
+            closest_points = list()
 
-        if self.distance(point, node.data) < self.distance(point, closest_point):
-            closest_point = node.data
+        closest_points.append((node.data, self.distance(node.data, point)))
+
+        closest_points.sort(key=lambda x: x[1])
 
         # add pruning
         if node.left is not None:
-            return self.nearest_neighbors(point, node.left, closest_point)
+            return self.nearest_neighbors(point, node.left, closest_points)
         if node.right is not None:
-            return self.nearest_neighbors(point, node.right, closest_point)
+            return self.nearest_neighbors(point, node.right, closest_points)
 
-
-        return closest_point
+        return closest_points
 
 
 # def create_prefix_tree(strings):
@@ -201,14 +204,16 @@ def main():
 
     tree = KDTree(5, [(1,2,3,4,5), (0,1,4,1,2), (2,4,3,6,7), (9,8,10,7,3), (-1,0,0,14,15)])
     tree2 = KDTree(2, [(1,1), (2,2), (3,3), (4,4), (5,5)])
-    print(tree.distance((1,1),(1,1)))
-    print(tree.distance((1,1),(2,2)))
-    print(tree.nearest_neighbors((1,2,3,4,5)))
-    print(tree.nearest_neighbors((0,1,4,1,2)))
-    print(tree.nearest_neighbors((2,4,3,6,7)))
-    print(tree.nearest_neighbors((0,1,3,1,2)))
-
-    print(tree2.nearest_neighbors((2,2)))
+    # print(tree.distance((1,1),(1,1)))
+    # print(tree.distance((1,1),(2,2)))
+    # print(tree.nearest_neighbors((1,2,3,4,5)))
+    # print(tree.nearest_neighbors((0,1,4,1,2)))
+    # print(tree.nearest_neighbors((2,4,3,6,7)))
+    # print(tree.nearest_neighbors((0,1,3,1,2)))
+    #
+    # print(tree2.nearest_neighbors((2,2)))
+    tree = KDTree(2,[(1,1), (2,2), (4,4)])
+    print(tree.nearest_neighbors((1,1)))
 
 #     assert tree.root.data == (1,2,3,4,5)
 #     assert tree.root.left.data == (0,1,4,1,2)

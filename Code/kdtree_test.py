@@ -112,6 +112,19 @@ class KDTreeTest(unittest.TestCase):
         assert tree.size == 2
         tree.insert('C')
         assert tree.size == 3
+
+    def test_nearest_neighbors(self):
+        tree = KDTree(2,[(1,1), (2,2), (4,4)])
+        neighbors = tree.nearest_neighbors((0,0))
+        assert neighbors[0] == ((1, 1), 1.4142135623730951)
+        assert neighbors[1] == ((2, 2), 2.8284271247461903)
+        assert neighbors[2] == ((4, 4), 5.656854249492381)
+
+        neighbors2 = tree.nearest_neighbors((1,1))
+        assert neighbors2[0] == ((1, 1), 0)
+        assert neighbors2[1] == ((2, 2), 1.4142135623730951)
+        assert neighbors2[2] == ((4, 4), 4.242640687119285)
+
     #
     # def test_search_with_3_items(self):
     #     # Create a complete binary search tree of 3 items in level-order
